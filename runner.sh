@@ -2,6 +2,7 @@
 # Example usage:
 # ./runner.sh >> runner.log 2>&1 && echo "" >> runner.log
 
+export DISPLAY=:0
 url="https://www.google.com/?q=It%20works"
 debug=1
 

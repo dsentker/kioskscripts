@@ -74,7 +74,7 @@ while true; do
   3)
     show_info
     ;;
-  4)
+  r)
     restart
     ;;
   *)

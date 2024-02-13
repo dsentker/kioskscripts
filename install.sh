@@ -1,4 +1,6 @@
 #!/bin/bash
 tag="main"
-zipfile="https://github.com/dsentker/kioskscripts/archive/$tag.zip"
-wget $zipfile && unzip "$tag.zip" && cd "kioskscripts-$tag/" && ./prepare.sh
+zipfile="$tag.zip"
+dir="kioskscripts-$tag/"
+rm "$zipfile" && rm -r "$dir"
+wget "https://github.com/dsentker/kioskscripts/archive/$tag.zip" && unzip "$zipfile" && cd "$dir" && ./prepare.sh

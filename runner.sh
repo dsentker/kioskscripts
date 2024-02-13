@@ -22,13 +22,13 @@ run_chrome() {
      --autoplay-policy=no-user-gesture-required
   )
 
-  chromium-browser "${flags[@]}" --app="$url"
+  chromium "${flags[@]}" --app="$url"
   exit;
 }
 
 # Check for internet connection
 if check_internet; then
-    if ! pgrep -x "chrome" > /dev/null; then
+    if ! pgrep -x "chromium" > /dev/null; then
         run_chrome
     else
       ./ping.sh

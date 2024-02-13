@@ -1,6 +1,24 @@
 #!/bin/bash
 
 wlan_conf_file="$HOME/kiosk/dummy.conf" # TODO update with real one
+killall chromium
+
+cron_check() {
+  # Check if the cron service is running
+  if ps -ef | grep '[c]ron' >/dev/null 2>&1; then
+    return 0 # cron is active
+  else
+    return 1
+  fi
+}
+
+cron_start() {
+  sudo /etc/init.d/cron start
+}
+
+cron_stop() {
+  sudo /etc/init.d/cron stop
+}
 
 # Function to configure WLAN
 configure_wlan() {
@@ -48,10 +66,11 @@ show_info() {
   internal_ip=$(hostname -I -i)
   uptime=$(uptime | awk '{print $3;}')
   ssid=$(grep -oP '(?<=ssid=")[^"]*' "$wlan_conf_file")
-
-  whiptail --msgbox "Uuid:   $uuid\nSSID:   $ssid\nIP:     $ip\nHost:   $internal_ip\nUptime: ${uptime%?} h" 12 60
+  cron_status=$([ $(cron_check) -eq 0 ] && echo "Running" || echo "Disabled")
+  whiptail --msgbox "Uuid:   $uuid\nSSID:   $ssid\nIP:     $ip\nHost:   $internal_ip\nCron:   $cron_status\nUptime: ${uptime%?} h" 13 60
 }
 
+cron_stop
 # Main menu loop
 while true; do
   choice=$(whiptail --nocancel --clear --title "Setup" --menu "Main" 12 80 5 \
@@ -76,6 +95,7 @@ while true; do
     ;;
   *)
     # Handle invalid choice
+    cron_start
     exit
     ;;
   esac

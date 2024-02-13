@@ -26,13 +26,10 @@ update_conf_file() {
     fi
 }
 
-# Function to restart Raspberry Pi
 restart() {
-  whiptail --msgbox "Restarting Raspberry Pi..." 8 40
   sudo shutdown -r now
 }
 
-# Function to perform connection test
 connection_test() {
   if ./connection-test.sh; then
     if ./ping.sh; then

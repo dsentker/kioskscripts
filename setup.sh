@@ -1,6 +1,6 @@
 #!/bin/bash
 
-wlan_conf_file="dummy.conf"
+wlan_conf_file="$HOME/kiosk/dummy.conf" # TODO update with real one
 
 # Function to configure WLAN
 configure_wlan() {

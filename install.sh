@@ -1,4 +1,5 @@
 #!/bin/bash
-
-zipfile=https://github.com/dsentker/kioskscripts/archive/refs/heads/main.zip
-curl -O $zipfile && unzip main.zip && chmod +x setup.sh && ./setup.sh
+tag="main"
+zipfile="https://github.com/dsentker/kioskscripts/archive/refs/heads/$tag.zip"
+mkdir kiosk && cd kiosk || exit
+curl -O $zipfile && unzip "kioskscripts-$tag.zip" && chmod +x setup.sh && ./setup.sh

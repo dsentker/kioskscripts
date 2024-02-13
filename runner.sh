@@ -8,7 +8,7 @@ url="https://www.google.com/?q=It%20works"
 # 0 = no debug
 # 1 = run chrome not in kiosk mode
 # 2 = do run run chrome, log message instead
-debug=1
+debug=0
 
 check_internet() {
   ping -q -c 1 -W 1 google.com >/dev/null

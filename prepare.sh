@@ -2,10 +2,9 @@
 currentDir=$(pwd)
 
 # Setup wallpaper
-echo "Install Wallpaper..."
-sudo apt install -q -y xwallpaper
-xwallpaper --zoom bg.jpg
+pcmanfm --set-wallpaper "$currentDir"/bg.jpg
 echo "Wallpaper installed successfully."
+
 # Setup cronjob
 runner="$currentDir/runner.sh"
 

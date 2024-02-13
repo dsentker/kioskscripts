@@ -21,8 +21,8 @@ fi
 echo "Install Keyboard shortcut..."
 sudo apt install -q -y xbindkeys
 setup="$currentDir/setup.sh"
-echo "\"bash $setup\"" > ~/.xbindkeysrc
-echo "  Alt+Mod2 + c" >> ~/.xbindkeysrc
+echo "\"lxterminal --command='/bin/bash --init-file $setup'\"" > ~/.xbindkeysrc
+echo "  Alt + k" >> ~/.xbindkeysrc
 xbindkeys --poll-rc
 killall xbindkeys
 xbindkeys

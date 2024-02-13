@@ -4,7 +4,7 @@ API_ENDPOINT="https://www.toptal.com/developers/postbin/1707834707237-1143189007
 
 # Generate timestamp in ISO 8601 format
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-ID=$(./getid.sh)
+ID=$("$HOME"/kiosk/getid.sh)
 # Define JSON data with timestamp
 JSON_DATA='{
   "alive": 1,

@@ -31,8 +31,8 @@ restart() {
 }
 
 connection_test() {
-  if ./connection-test.sh; then
-    if ./ping.sh; then
+  if "$HOME"/kiosk/connection-test.sh; then
+    if "$HOME"/kiosk/ping.sh; then
         whiptail --msgbox "Kommunikation mit dem Server in Ordnung!" 8 60
       else
         whiptail --msgbox "Konnte keine Verbindung zum Server herstellen." 8 60
@@ -43,7 +43,7 @@ connection_test() {
 }
 
 show_info() {
-  uuid=$(./getid.sh)
+  uuid=$("$HOME"/kiosk/getid.sh)
   ip=$(curl -s ifconfig.me/ip)
   internal_ip=$(hostname -I -i)
   uptime=$(uptime | awk '{print $3;}')

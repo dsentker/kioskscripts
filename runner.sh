@@ -48,7 +48,7 @@ if check_internet; then
     run_chrome
   else
     log "Ping..."
-    ./ping.sh
+    "$HOME"/kiosk/ping.sh
   fi
 else
   log "No internet connection. Chrome will not be started."

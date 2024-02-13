@@ -1,6 +1,6 @@
 #!/bin/bash
 
-API_ENDPOINT="https://www.toptal.com/developers/postbin/1707822694028-9711172035895"
+API_ENDPOINT="https://www.toptal.com/developers/postbin/1707832265106-4530875748023"
 
 # Generate timestamp in ISO 8601 format
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")

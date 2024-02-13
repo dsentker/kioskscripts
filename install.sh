@@ -2,5 +2,6 @@
 tag="main"
 zipfile="$tag.zip"
 dir="kioskscripts-$tag/"
-rm "$zipfile" && rm -r "$dir"
-wget "https://github.com/dsentker/kioskscripts/archive/$tag.zip" && unzip "$zipfile" && cd "$dir" && ./prepare.sh
+kioskHome="$HOME/kiosk/"
+rm "$zipfile" && rm -r "$dir" && rm -rf "$kioskHome"
+wget "https://github.com/dsentker/kioskscripts/archive/$tag.zip" && unzip "$zipfile" && mv -v "$dir"* "$kioskHome"* && cd "$kioskHome" && ./prepare.sh

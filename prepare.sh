@@ -22,7 +22,7 @@ echo "Install Keyboard shortcut..."
 sudo apt install -q -y xbindkeys
 setup="$currentDir/setup.sh"
 echo "\"bash $setup\"" > ~/.xbindkeysrc
-echo "  Alt+Mod2 + k" >> ~/.xbindkeysrc
+echo "  Alt+Mod2 + c" >> ~/.xbindkeysrc
 xbindkeys --poll-rc
 killall xbindkeys
 xbindkeys

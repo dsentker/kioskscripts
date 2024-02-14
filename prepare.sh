@@ -1,8 +1,8 @@
 #!/bin/bash
-currentDir=$(pwd)
+kioskHome="$HOME/kiosk/"
 
 # Setup cronjob
-runner="$currentDir/runner.sh"
+runner="$kioskHome/runner.sh"
 
 # Check if the cronjob entry already exists
 if ! crontab -l | grep -q "$runner"; then
@@ -15,7 +15,7 @@ fi
 
 echo "Install Keyboard shortcut..."
 sudo apt install -q -y xbindkeys
-setup="$currentDir/setup.sh"
+setup="$kioskHome/setup.sh"
 echo "\"lxterminal --command='/bin/bash --init-file $setup'\"" > ~/.xbindkeysrc
 echo "  Alt + k" >> ~/.xbindkeysrc
 xbindkeys --poll-rc
@@ -24,7 +24,7 @@ xbindkeys
 echo "Done."
 
 # Setup wallpaper
-pcmanfm --set-wallpaper "$currentDir"/bg.jpg
+pcmanfm --set-wallpaper "$kioskHome"/bg.jpg
 echo "Wallpaper installed successfully."
 
 # Hide trash icon

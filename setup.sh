@@ -1,7 +1,9 @@
 #!/bin/bash
 
 wlan_conf_file="$HOME/kiosk/dummy.conf" # TODO update with real one
-killall chromium
+killall -q chromium
+killall -q chromium-browser
+killall -q chrome
 
 cron_check() {
   # Check if the cron service is running
@@ -67,7 +69,12 @@ show_info() {
   uptime=$(uptime | awk '{print $3;}')
   ssid=$(grep -oP '(?<=ssid=")[^"]*' "$wlan_conf_file")
   cron_status=$([ $(cron_check) -eq 0 ] && echo "Running" || echo "Disabled")
-  whiptail --msgbox "Uuid:   $uuid\nSSID:   $ssid\nIP:     $ip\nHost:   $internal_ip\nCron:   $cron_status\nUptime: ${uptime%?} h" 13 60
+  whiptail --msgbox "Uuid:    $uuid\n
+  SSID:    $ssid\n
+  IP:      $ip\n
+  Host:    $internal_ip\n
+  Cron:    $cron_status\n
+  Uptime:  ${uptime%?} h" 13 60
 }
 
 cron_stop
@@ -77,6 +84,7 @@ while true; do
     1 "WLAN-Konfiguration  " \
     2 "Verbindungs-Test  " \
     3 "Zeige Informationen" \
+    4 "Experten-Einstellungen" \
     r "Gerät neustarten  " \
     x "Setup beenden" 3>&1 1>&2 2>&3)
 
@@ -89,6 +97,9 @@ while true; do
     ;;
   3)
     show_info
+    ;;
+  4)
+    raspi-config
     ;;
   r)
     restart

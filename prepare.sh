@@ -1,10 +1,6 @@
 #!/bin/bash
 currentDir=$(pwd)
 
-# Setup wallpaper
-pcmanfm --set-wallpaper "$currentDir"/bg.jpg
-echo "Wallpaper installed successfully."
-
 # Setup cronjob
 runner="$currentDir/runner.sh"
 
@@ -26,3 +22,26 @@ xbindkeys --poll-rc
 killall xbindkeys
 xbindkeys
 echo "Done."
+
+# Setup wallpaper
+pcmanfm --set-wallpaper "$currentDir"/bg.jpg
+echo "Wallpaper installed successfully."
+
+# Ask for URL
+read -p "URL für Kiosk-Modus (ENTER für Standardeinstellung): " userInput
+
+# Use default URL if the user input is empty
+deviceId=$("$HOME"/kiosk/getid.sh)
+url=${userInput:-"https://www.google.com?q=$deviceId"} # TODO
+
+# Validate the URL format using a simple regex
+url_regex='^https?://[^\s/$.?#].[^\s]*$'
+if [[ ! $url =~ $url_regex ]]; then
+    echo "Achtung, die URL scheint nicht korrekt!"
+    # exit 1
+fi
+
+# Write the URL to url.txt (overwrite if exists)
+echo "$url" > url.txt
+
+echo "URL has been written to url.txt successfully."

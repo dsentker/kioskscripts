@@ -3,29 +3,36 @@
 # ./runner.sh >> runner.log 2>&1 && echo "" >> runner.log
 
 export DISPLAY=:0
-url="https://www.google.com/?q=It%20works"
 
 # 0 = no debug
 # 1 = run chrome not in kiosk mode
 # 2 = do run run chrome, log message instead
 debug=0
 
+# Check if 'chromium' binary exists, otherwise use 'chromium-browser'
+if command -v chromium > /dev/null 2>&1; then
+    alias raspbian_chromium='chromium'
+else
+    alias raspbian_chromium='chromium-browser'
+fi
+
 check_internet() {
   ping -q -c 1 -W 1 google.com >/dev/null
 }
 
 log() {
-  date >> ~/c.log
-  echo "$1" >>~/c.log
-  echo "" >>~/c.log
+  {
+    date; echo "$1"; echo ""; } >> ~/c.log
+  }
 }
 
 run_chrome() {
+  url=$(cat "$HOME"/kiosk)
   if [ "$debug" -eq 2 ]; then
     # Commands to run when debug is 0
     log "Run chrome (not really)"
   elif [ "$debug" -eq 1 ]; then
-    chromium --app="$url"
+    raspbian_chromium --app="$url"
   else
     flags=(
       --kiosk
@@ -40,15 +47,15 @@ run_chrome() {
       --autoplay-policy=no-user-gesture-required
     )
 
-    chromium "${flags[@]}" --app="$url"
+    raspbian_chromium "${flags[@]}" --app="$url"
   fi
   exit
 }
 
 # Check for internet connection
 if check_internet; then
-  if ! pgrep -x "chromium" >/dev/null; then
-    log "About to running chrome..."
+  if ! pgrep -f "chrome|chromium|chromium-browser" >/dev/null; then
+    log "Start Chrome..."
     run_chrome
   else
     log "Ping..."

@@ -41,4 +41,4 @@ if [[ ! $url =~ $url_regex ]]; then
     # exit 1
 fi
 
-echo "$url" > url.txt && echo "URL gespeichert: $url"
+echo "$url" > "$HOME"/kiosk/url.txt && echo "URL gespeichert: $url"

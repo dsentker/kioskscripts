@@ -58,7 +58,7 @@ function create_wallpaper {
 }
 
 function change_splash {
-    newImage=$("$HOME"/kiosk/splash.jpg)
+    newImage=$("$HOME"/kiosk/splash.png)
     rm /usr/share/plymouth/themes/pix/splash.png
     cp newImage /usr/share/plymouth/themes/pix/
     echp "Splash image changed."

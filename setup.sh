@@ -1,7 +1,5 @@
 #!/bin/bash
 
-wlan_conf_file="$HOME/kiosk/dummy.conf" # TODO update with real one
-
 if [ $XDG_MENU_PREFIX != 'gnome-' ]; then
   killall -q chromium
   killall -q chromium-browser
@@ -28,22 +26,11 @@ cron_stop() {
 configure_wlan() {
   ssid=$(whiptail --inputbox "SSID / Name des Netzwerks:" 12 60 3>&1 1>&2 2>&3)
   password=$(whiptail --passwordbox "Passwort:" 12 60 3>&1 1>&2 2>&3)
-  update_conf_file $ssid $password
-}
-
-update_conf_file() {
-    local ssid="$1"
-    local password="$2"
-
-    if [ -f "$wlan_conf_file" ]; then
-        # Replace ssid value
-        sed -i "s/\(ssid=\"\)[^\"]*\"/\1$ssid\"/" "$wlan_conf_file"
-        # Replace password value
-        sed -i "s/\(psk=\"\)[^\"]*\"/\1$password\"/" "$wlan_conf_file"
-        whiptail --msgbox "Konfiguration gespeichert, bitte starten Sie das Gerät jetzt neu." 8 40
-    else
-        whiptail --msgbox "WLAN-Konfigurations-Datei konnte nicht gefunden werden" 8 40
-    fi
+  if nmcli d wifi connect "$ssid" password "$password"; then
+    whiptail --msgbox "Konfiguration gespeichert, bitte starten Sie das Gerät jetzt neu." 8 40
+  else
+    whiptail --msgbox "Fehler beim Verbinden mit dem WLAN. Bitte überprüfen Sie die SSID und das Passwort und versuchen Sie es erneut." 10 60
+  fi
 }
 
 restart() {
@@ -67,25 +54,27 @@ show_info() {
   ip=$(curl -s ifconfig.me/ip)
   internal_ip=$(hostname -I -i)
   uptime=$(uptime | awk '{print $3;}')
-  ssid=$(grep -oP '(?<=ssid=")[^"]*' "$wlan_conf_file")
+  #ssid=$(grep -oP '(?<=ssid=")[^"]*' "$wlan_conf_file")
   cron_status=$([ $(cron_check) -eq 0 ] && echo "Running" || echo "Disabled")
-  whiptail --msgbox "Uuid:    $uuid\n
-  SSID:    $ssid\n
-  IP:      $ip\n
-  Host:    $internal_ip\n
-  Cron:    $cron_status\n
-  Uptime:  ${uptime%?} h" 13 60
+  whiptail --msgbox "\n
+Uuid:    $uuid\n
+IP:      $ip\n
+Host:    $internal_ip\n
+Cron:    $cron_status\n
+Uptime:  ${uptime%?} h" 13 60
 }
 
 cron_stop
 # Main menu loop
 showMenu=true
 while $showMenu; do
-  choice=$(whiptail --nocancel --clear --title "Setup" --menu "Main" 15 80 6 \
-    1 "WLAN-Konfiguration  " \
-    2 "Verbindungs-Test  " \
-    3 "Zeige Informationen" \
-    4 "Experten-Einstellungen" \
+  choice=$(whiptail --nocancel --clear --title "Setup" --menu "Main" 17 80 6 \
+    1 "WLAN-Konfiguration (schnell) " \
+    2 "WLAN-Konfiguration (erweitert) " \
+    3 "Verbindungs-Test  " \
+    4 "Zeige Informationen" \
+    5 "Experten-Einstellungen" \
+    6 "Werkseinstellungen" \
     r "Gerät neustarten  " \
     x "Setup beenden" 3>&1 1>&2 2>&3)
 
@@ -94,14 +83,24 @@ while $showMenu; do
     configure_wlan
     ;;
   2)
-    connection_test
+    showMenu=false
+    nmcli radio wifi on
+    nmtui connect
     ;;
   3)
-    show_info
+    connection_test
     ;;
   4)
+    show_info
+    ;;
+  5)
     showMenu=false
     sudo raspi-config
+    ;;
+  6)
+    showMenu=false
+    cd ~ && wget -O - https://raw.githubusercontent.com/dsentker/kioskscripts/main/install.sh | bash
+    exit
     ;;
   r)
     restart

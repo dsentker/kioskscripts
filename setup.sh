@@ -57,11 +57,11 @@ show_info() {
   uptime=$(uptime | awk '{print $3;}')
   #ssid=$(grep -oP '(?<=ssid=")[^"]*' "$wlan_conf_file")
   cron_status=$([ $(cron_check) -eq 0 ] && echo "Running" || echo "Disabled")
-  whiptail --msgbox "\n
-Uuid:    $uuid\n
+  whiptail --msgbox "
+Uuid:    $uuid
 IP:      $ip
-Host:    $internal_ip\n
-Cron:    $cron_status\n
+Host:    $internal_ip
+Cron:    $cron_status
 Uptime:  ${uptime%?} h" 13 60
 }
 

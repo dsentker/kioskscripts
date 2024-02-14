@@ -41,7 +41,4 @@ if [[ ! $url =~ $url_regex ]]; then
     # exit 1
 fi
 
-# Write the URL to url.txt (overwrite if exists)
-echo "$url" > url.txt
-
-echo "URL has been written to url.txt successfully."
+echo "$url" > url.txt && echo "URL gespeichert: $url"

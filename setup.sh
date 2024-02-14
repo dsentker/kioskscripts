@@ -26,8 +26,9 @@ cron_stop() {
 configure_wlan() {
   ssid=$(whiptail --inputbox "SSID / Name des Netzwerks:" 12 60 3>&1 1>&2 2>&3)
   password=$(whiptail --passwordbox "Passwort:" 12 60 3>&1 1>&2 2>&3)
+  echo "Bitte ein wenig Geduld..."
   if nmcli d wifi connect "$ssid" password "$password"; then
-    whiptail --msgbox "Konfiguration gespeichert, bitte starten Sie das Gerät jetzt neu." 8 40
+    whiptail --msgbox "WLAN-Verbindung erfolgreich!" 8 40
   else
     whiptail --msgbox "Fehler beim Verbinden mit dem WLAN. Bitte überprüfen Sie die SSID und das Passwort und versuchen Sie es erneut." 10 60
   fi

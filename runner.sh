@@ -21,9 +21,7 @@ check_internet() {
 }
 
 log() {
-  {
-    date; echo "$1"; echo ""; } >> ~/c.log
-  }
+  { date; echo "$1"; echo ""; } >> ~/c.log
 }
 
 run_chrome() {

@@ -27,6 +27,18 @@ echo "Done."
 pcmanfm --set-wallpaper "$currentDir"/bg.jpg
 echo "Wallpaper installed successfully."
 
+# Hide trash icon
+config_file="$HOME/.config/pcmanfm/LXDE-pi/desktop-items-0.conf"
+
+# Check if the file exists
+if [ -f "$config_file" ]; then
+    # Replace the line "show_trash=1" with "show_trash=0"
+    sed -i 's/show_trash=1/show_trash=0/' "$config_file"
+    echo "Trash icon hidden."
+else
+    echo "Error: Configuration file not found at $config_file"
+fi
+
 # Ask for URL
 read -p "Specify URL for kiosk mode: (Press ENTER for default): " userInput
 

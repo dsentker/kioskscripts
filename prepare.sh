@@ -57,6 +57,13 @@ function create_wallpaper {
   pcmanfm --reconfigure
 }
 
+function change_splash {
+    newImage=$("$HOME"/kiosk/splash.jpg)
+    rm /usr/share/plymouth/themes/pix/splash.png
+    cp newImage /usr/share/plymouth/themes/pix/
+    echp "Splash image changed."
+}
+
 function create_url {
   # Ask for URL
   read -p "Specify URL for kiosk mode: (Press ENTER for default): " userInput
@@ -78,4 +85,5 @@ function create_url {
 create_cronjob;
 create_keyboard_shortcuts;
 create_wallpaper;
+change_splash;
 create_url;

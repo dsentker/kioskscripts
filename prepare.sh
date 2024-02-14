@@ -16,10 +16,9 @@ fi
 echo "Install Keyboard shortcut..."
 sudo apt install -q -y xbindkeys
 setup="$kioskHome/setup.sh"
-echo "\"lxterminal --command='/bin/bash --init-file $setup'\"" > ~/.xbindkeysrc
+echo "\"lxterminal -e $setup\"" > ~/.xbindkeysrc
 echo "  Alt + k" >> ~/.xbindkeysrc
-xbindkeys --poll-rc
-killall xbindkeys
+xbindkeys --poll-rc && killall xbindkeys
 xbindkeys
 echo "Done."
 

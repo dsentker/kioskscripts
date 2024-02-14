@@ -10,11 +10,13 @@ export DISPLAY=:0
 debug=0
 
 # Check if 'chromium' binary exists, otherwise use 'chromium-browser'
-if command -v chromium > /dev/null 2>&1; then
-    alias raspbian_chromium='chromium'
-else
-    alias raspbian_chromium='chromium-browser'
-fi
+raspbian_chromium() {
+    if command -v chromium > /dev/null 2>&1; then
+        chromium "$@"
+    else
+        chromium-browser "$@"
+    fi
+}
 
 check_internet() {
   ping -q -c 1 -W 1 google.com >/dev/null
@@ -25,7 +27,7 @@ log() {
 }
 
 run_chrome() {
-  url=$(cat "$HOME"/kiosk)
+  url=$(cat "$HOME"/kiosk/url.txt)
   if [ "$debug" -eq 2 ]; then
     # Commands to run when debug is 0
     log "Run chrome (not really)"

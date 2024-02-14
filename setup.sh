@@ -101,7 +101,7 @@ while $showMenu; do
     ;;
   4)
     showMenu=false
-    raspi-config
+    sudo raspi-config
     ;;
   r)
     restart

@@ -82,8 +82,13 @@ function create_url {
   echo "$url" > "$HOME"/kiosk/url.txt && echo "URL set to $url"
 }
 
+function rebuild_initrd {
+  sudo plymouth-set-default-theme --rebuild-initrd pix11
+}
+
 create_cronjob;
 create_keyboard_shortcuts;
 create_wallpaper;
 change_splash;
+# rebuild_initrd;
 create_url;

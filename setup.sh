@@ -58,7 +58,7 @@ show_info() {
   cron_status=$([ $(cron_check) -eq 0 ] && echo "Running" || echo "Disabled")
   whiptail --msgbox "\n
 Uuid:    $uuid\n
-IP:      $ip\n
+IP:      $ip
 Host:    $internal_ip\n
 Cron:    $cron_status\n
 Uptime:  ${uptime%?} h" 13 60
@@ -68,7 +68,7 @@ cron_stop
 # Main menu loop
 showMenu=true
 while $showMenu; do
-  choice=$(whiptail --nocancel --clear --title "Setup" --menu "Main" 17 80 6 \
+  choice=$(whiptail --nocancel --clear --title "Setup" --menu "Main" 17 80 8 \
     1 "WLAN-Konfiguration (schnell) " \
     2 "WLAN-Konfiguration (erweitert) " \
     3 "Verbindungs-Test  " \

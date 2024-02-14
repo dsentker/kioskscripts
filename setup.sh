@@ -1,9 +1,12 @@
 #!/bin/bash
 
 wlan_conf_file="$HOME/kiosk/dummy.conf" # TODO update with real one
-killall -q chromium
-killall -q chromium-browser
-killall -q chrome
+
+if [ $XDG_MENU_PREFIX != 'gnome-' ]; then
+  killall -q chromium
+  killall -q chromium-browser
+  killall -q chrome
+fi
 
 cron_check() {
   # Check if the cron service is running
@@ -15,19 +18,16 @@ cron_check() {
 }
 
 cron_start() {
-  sudo /etc/init.d/cron start
+  sudo /etc/init.d/cron start > /dev/null 2>&1
 }
 
 cron_stop() {
-  sudo /etc/init.d/cron stop
+  sudo /etc/init.d/cron stop > /dev/null 2>&1
 }
 
-# Function to configure WLAN
 configure_wlan() {
   ssid=$(whiptail --inputbox "SSID / Name des Netzwerks:" 12 60 3>&1 1>&2 2>&3)
   password=$(whiptail --passwordbox "Passwort:" 12 60 3>&1 1>&2 2>&3)
-  # echo "SSID=$ssid" >~/wlan.txt
-  # echo "Password=$password" >>~/wlan.txt
   update_conf_file $ssid $password
 }
 
@@ -79,7 +79,8 @@ show_info() {
 
 cron_stop
 # Main menu loop
-while true; do
+showMenu=true
+while $showMenu; do
   choice=$(whiptail --nocancel --clear --title "Setup" --menu "Main" 14 80 5 \
     1 "WLAN-Konfiguration  " \
     2 "Verbindungs-Test  " \
@@ -99,8 +100,8 @@ while true; do
     show_info
     ;;
   4)
-    exec 3>&1
-    (raspi-config)
+    showMenu=false
+    raspi-config
     ;;
   r)
     restart
@@ -108,6 +109,7 @@ while true; do
   *)
     # Handle invalid choice
     cron_start
+    showMenu=false
     exit
     ;;
   esac

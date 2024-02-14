@@ -81,7 +81,7 @@ cron_stop
 # Main menu loop
 showMenu=true
 while $showMenu; do
-  choice=$(whiptail --nocancel --clear --title "Setup" --menu "Main" 16 80 5 \
+  choice=$(whiptail --nocancel --clear --title "Setup" --menu "Main" 15 80 10 \
     1 "WLAN-Konfiguration  " \
     2 "Verbindungs-Test  " \
     3 "Zeige Informationen" \

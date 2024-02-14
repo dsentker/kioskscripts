@@ -59,9 +59,9 @@ function create_wallpaper {
 
 function change_splash {
     newImage="$HOME"/kiosk/splash.png
-    rm -f /usr/share/plymouth/themes/pix/splash.png
-    cp "$newImage" /usr/share/plymouth/themes/pix/
-    echp "Splash image changed."
+    sudo rm -f /usr/share/plymouth/themes/pix/splash.png
+    sudo cp "$newImage" /usr/share/plymouth/themes/pix/
+    echo "Splash image changed."
 }
 
 function create_url {

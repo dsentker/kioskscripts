@@ -1,5 +1,5 @@
 #!/bin/bash
-kioskHome="$HOME/kiosk/"
+kioskHome="$HOME/kiosk"
 
 # Setup cronjob
 runner="$kioskHome/runner.sh"

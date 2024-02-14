@@ -80,7 +80,7 @@ show_info() {
 cron_stop
 # Main menu loop
 while true; do
-  choice=$(whiptail --nocancel --clear --title "Setup" --menu "Main" 12 80 5 \
+  choice=$(whiptail --nocancel --clear --title "Setup" --menu "Main" 14 80 5 \
     1 "WLAN-Konfiguration  " \
     2 "Verbindungs-Test  " \
     3 "Zeige Informationen" \
@@ -99,7 +99,8 @@ while true; do
     show_info
     ;;
   4)
-    raspi-config
+    exec 3>&1
+    (raspi-config)
     ;;
   r)
     restart

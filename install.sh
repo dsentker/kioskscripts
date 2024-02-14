@@ -15,4 +15,5 @@ mkdir "$kioskHome"
 wget -q "https://github.com/dsentker/kioskscripts/archive/$tag.zip"
 unzip "$zipfile"
 mv -v "$dir"* "$kioskHome" && rm -rf "$dir" && rm -rf "$HOME/c.log"
+clear
 cd "$kioskHome" &&  ./prepare.sh

@@ -45,7 +45,7 @@ function create_keyboard_shortcuts {
 
 function create_wallpaper {
   pcmanfm --set-wallpaper "$kioskHome"/bg.jpg
-  pcmanfm --wallpaper-mode=fit
+  pcmanfm --wallpaper-mode=crop # cover
   echo "Wallpaper installed successfully."
 
   # Hide trash icon
@@ -67,6 +67,7 @@ function change_splash {
     newImage="$HOME"/kiosk/splash.png
     sudo rm -f /usr/share/plymouth/themes/pix/splash.png
     sudo cp "$newImage" /usr/share/plymouth/themes/pix/
+    sudo plymouth-set-default-theme --rebuild-initrd pix11
     echo "Splash image changed."
 }
 
@@ -88,14 +89,41 @@ function create_url {
   echo "$url" > "$HOME"/kiosk/url.txt && echo "URL set to $url"
 }
 
-function rebuild_initrd {
-  sudo plymouth-set-default-theme --rebuild-initrd pix11
+# Function to display the main menu
+function show_menu() {
+  selection=$(whiptail --title "Initial setup" --menu "" 17 80 9 \
+    "1" "Run complete setup" \
+    "2" "  Install Dependencies" \
+    "3" "  Create Cronjob" \
+    "4" "  Create Keyboard Shortcuts" \
+    "5" "  Set Wallpaper" \
+    "6" "  Change Splash Image / Boot Screen" \
+    "7" "  Change URL" \
+    "9" "Exit" \
+    3>&1 1>&2 2>&3)
+
+  case $selection in
+    1) run_all ;;
+    2) install_dependencies ;;
+    3) create_cronjob ;;
+    4) create_keyboard_shortcuts ;;
+    5) create_wallpaper ;;
+    6) change_splash ;;
+    7) create_url ;;
+    9) exit 0 ;;
+    *) echo "Invalid option" ;;
+  esac
 }
 
-install_dependencies;
-create_cronjob;
-create_keyboard_shortcuts;
-create_wallpaper;
-change_splash;
-# rebuild_initrd;
-create_url;
+# Function to run all functions
+function run_all() {
+  create_url
+  install_dependencies
+  create_cronjob
+  create_keyboard_shortcuts
+  create_wallpaper
+  change_splash
+}
+
+# Display the main menu
+show_menu

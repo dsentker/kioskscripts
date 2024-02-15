@@ -1,6 +1,12 @@
 #!/bin/bash
 kioskHome="$HOME/kiosk"
 
+function install_dependencies {
+  sudo apt update
+  sudo apt upgrade
+  sudo apt install -y fonts-noto-color-emoji
+}
+
 function create_cronjob() {
   runner="$kioskHome/runner.sh"
 
@@ -86,6 +92,7 @@ function rebuild_initrd {
   sudo plymouth-set-default-theme --rebuild-initrd pix11
 }
 
+install_dependencies;
 create_cronjob;
 create_keyboard_shortcuts;
 create_wallpaper;

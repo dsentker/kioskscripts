@@ -67,7 +67,7 @@ function change_splash {
     newImage="$HOME"/kiosk/splash.png
     sudo rm -f /usr/share/plymouth/themes/pix/splash.png
     sudo cp "$newImage" /usr/share/plymouth/themes/pix/
-    sudo plymouth-set-default-theme --rebuild-initrd pix11
+    sudo plymouth-set-default-theme --rebuild-initrd pix
     echo "Splash image changed."
 }
 

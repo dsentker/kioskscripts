@@ -96,7 +96,7 @@ function show_menu() {
     "2" "  Install Dependencies" \
     "3" "  Create Cronjob" \
     "4" "  Create Keyboard Shortcuts" \
-    "5" "  Set Wallpaper" \
+    "5" "  Set Background, Hide Desktop Icons" \
     "6" "  Change Splash Image / Boot Screen" \
     "7" "  Change URL" \
     "9" "Exit" \

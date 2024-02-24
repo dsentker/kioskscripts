@@ -90,14 +90,15 @@ make_api_call() {
 
     # Check if the response is a valid JSON
     if jq -e . >/dev/null 2>&1 <<<"$response"; then
-        local msg=$(echo "$response" | jq -r '.msg')
+        local msg=$(echo "$response" | jq -r '.action')
 
         # Check the value of the 'msg' key in the JSON response
         case "$msg" in
             "ack")
-                # Run the shell script for a positive acknowledgment
                 echo "Ping successful"
-                # Add your script execution command here
+                ;;
+            "restart")
+                shutdown -r now
                 ;;
             *)
                 # Handle other cases or errors

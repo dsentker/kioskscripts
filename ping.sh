@@ -1,7 +1,8 @@
 #!/bin/bash
 # shellcheck disable=SC2155
 
-API_ENDPOINT="https://nucast.de/ping"
+# API_ENDPOINT="https://nucast.de/ping"
+API_ENDPOINT="http://localhost/ping"
 VERSION_FILE="$HOME/kiosk/script_version"
 
 # Function to get timestamp in ISO 8601 format
@@ -36,8 +37,7 @@ get_cpu_usage() {
 }
 
 get_uptime() {
-  uptime_seconds=$(uptime | awk -F'[ ,:]+' '{print $6 * 3600 + $7 * 60 + $8}')
-  echo "$uptime_seconds"
+  ./uptime.sh
 }
 
 get_device_model() {

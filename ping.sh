@@ -40,6 +40,14 @@ get_uptime() {
   ./uptime.sh
 }
 
+get_utc_offset() {
+  date +%z
+}
+
+get_resolution() {
+  xdpyinfo | awk '/dimensions/{print $2}'
+}
+
 get_device_model() {
   model_path="/sys/firmware/devicetree/base/model"
 
@@ -67,6 +75,8 @@ create_json_data() {
     local uptime=$(get_uptime)
     local model=$(get_device_model)
     local hostname=$(get_hostname)
+    local resolution=$(get_resolution)
+    local utc_offset=$(get_utc_offset)
 
     cat <<EOF
 {
@@ -74,10 +84,12 @@ create_json_data() {
    "alive": 1,
    "id": "$id",
    "ts": "$timestamp",
+   "utco": "$utc_offset",
    "cpu": "$cpu_usage",
    "up": "$uptime",
    "mdl": "$model",
    "host": "$hostname",
+   "res": "$resolution",
    "sig": $signal_quality_percentage
 }
 EOF

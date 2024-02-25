@@ -109,6 +109,9 @@ make_api_call() {
             "ack")
                 echo "Ping successful"
                 ;;
+            "test")
+                echo "Received 'test' command"
+                ;;
             "restart")
                 shutdown -r now
                 ;;

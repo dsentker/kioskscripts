@@ -77,7 +77,7 @@ function create_url {
 
   # Use default URL if the user input is empty
   deviceId=$("$HOME"/kiosk/getid.sh)
-  url=${userInput:-"https://www.google.com?q=$deviceId"} # TODO
+  url=${userInput:-"https://nucast.de/cast/$deviceId"}
 
   # Validate the URL format using a simple regex
   url_regex='^https?://[^\s/$.?#].[^\s]*$'

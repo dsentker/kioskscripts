@@ -1,8 +1,8 @@
 #!/bin/bash
 # shellcheck disable=SC2155
 
-# API_ENDPOINT="https://nucast.de/ping"
-API_ENDPOINT="http://localhost/ping"
+API_ENDPOINT="https://nucast.de/ping"
+# API_ENDPOINT="http://localhost/ping"
 VERSION_FILE="$HOME/kiosk/.version"
 
 # Function to get timestamp in ISO 8601 format

@@ -9,9 +9,9 @@ fi
 cron_check() {
   # Check if the cron service is running
   if ps -ef | grep '[c]ron' >/dev/null 2>&1; then
-    return 0 # cron is active
+    echo 0 # cron is active
   else
-    return 1
+    echo 1
   fi
 }
 

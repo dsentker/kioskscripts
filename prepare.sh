@@ -125,5 +125,9 @@ function run_all() {
   change_splash
 }
 
-# Display the main menu
-show_menu
+if [[ "$1" == "--q" ]]; then
+  run_all
+else
+  # Display the main menu
+  show_menu
+fi

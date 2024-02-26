@@ -115,6 +115,9 @@ make_api_call() {
             "restart")
                 shutdown -r now
                 ;;
+            "update")
+                ./install --q
+                ;;
             *)
                 # Handle other cases or errors
                 echo "Unexpected server response. Exiting with error."

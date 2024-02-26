@@ -1,5 +1,5 @@
-# Kiosk
-Kiosk mode for raspberry pi devices.
+# Kiosk Scripts
+Kiosk mode for raspberry pi devices. Nucast is required.
 
 ## Install on Raspberry
 
@@ -16,3 +16,9 @@ Kiosk mode for raspberry pi devices.
 ```wget -O - https://raw.githubusercontent.com/dsentker/kioskscripts/main/install.sh | bash```
 
 </details>
+
+## Checks
+```shell
+sudo apt install shellcheck
+shellcheck *.sh
+```
